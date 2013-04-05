@@ -1,0 +1,11 @@
+.DS_Store
+.project
+.TemporaryItems*
+*.swp
+*.swo
+*.swn
+*.tmpproj
+*.gem
+
+Gemfile.lock
+/.bundle
