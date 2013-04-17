@@ -294,4 +294,67 @@ describe ValidationRules do
 
     ValidationRules.future_date('2010-10-25').should be_false
   end
+
+  subject do
+    ValidationRules
+  end
+
+  describe '.bool' do
+    it 'validates for boolean true' do
+      subject.bool(true).should be_true
+    end
+
+    it 'validates for boolean false' do
+      subject.bool(false).should be_true
+    end
+
+    it 'rejects non bool' do
+      subject.bool('true').should be_false
+      subject.bool('false').should be_false
+      subject.bool('1').should be_false
+      subject.bool('0').should be_false
+      subject.bool('abc').should be_false
+      subject.bool(5).should be_false
+    end
+  end
+
+  describe '.any_bool' do
+    it 'validates for boolean true' do
+      subject.any_bool(true).should be_true
+    end
+
+    it 'validates for any_boolean false' do
+      subject.any_bool(false).should be_true
+    end
+
+    it 'validates for string true' do
+      subject.any_bool('true').should be_true
+    end
+
+    it 'validates for string false' do
+      subject.any_bool('false').should be_true
+    end
+
+    it 'validates for int 1' do
+      subject.any_bool(1).should be_true
+    end
+
+    it 'validates for int 0' do
+      subject.any_bool(0).should be_true
+    end
+
+    it 'validates for string 1' do
+      subject.any_bool('1').should be_true
+    end
+
+    it 'validates for string 0' do
+      subject.any_bool('0').should be_true
+    end
+
+    it 'rejects non bool' do
+      subject.any_bool('5').should be_false
+      subject.any_bool('abc').should be_false
+      subject.any_bool(5).should be_false
+    end
+  end
 end

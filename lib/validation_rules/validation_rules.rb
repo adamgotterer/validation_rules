@@ -126,4 +126,12 @@ module ValidationRules
   def self.range(value, min, max)
     value.to_f >= min.to_f and value.to_f <= max.to_f
   end
+
+  def self.bool(value)
+    !!value == value
+  end
+
+  def self.any_bool(value)
+    [true, false, 0, 1, "0", "1", "true", "false"].include?(value)
+  end
 end
