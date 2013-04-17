@@ -2,6 +2,6 @@
 
 A collection of commonly used Ruby validation rules
 
-`gem "validation_rules", "~> 1.0.1"`
+`gem "validation_rules", "~> 1.0.2"`
 
-No documentationn yet, use http://rubydoc.info/gems/validation_rules/1.0.1/frames
+No documentationn yet, use http://rubydoc.info/gems/validation_rules/1.0.2/frames

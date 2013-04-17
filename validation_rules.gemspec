@@ -3,7 +3,7 @@ require File.expand_path('../lib/validation_rules/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.name        = 'validation_rules'
   gem.version     = ValidationRules::VERSION
-  gem.date        = '2013-04-05'
+  gem.date        = '2013-04-17'
   gem.summary     = "A collection of common validation rules"
   gem.description = "A collection of common validation rules"
   gem.authors     = ['Adam Gotterer']
