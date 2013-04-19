@@ -245,6 +245,16 @@ describe ValidationRules do
     ValidationRules.positive(0).should be_false
   end
 
+  it 'validates negative' do
+    ValidationRules.negative('-10.99').should be_true
+    ValidationRules.negative(-10.99).should be_true
+
+    ValidationRules.negative(10).should be_false
+    ValidationRules.negative(10.99).should be_false
+    ValidationRules.negative('10.99').should be_false
+    ValidationRules.negative(0).should be_false
+  end
+
   it 'validates range' do
     ValidationRules.range(5, 1, 10).should be_true
     ValidationRules.range(5.5, 1, 10).should be_true
@@ -289,10 +299,27 @@ describe ValidationRules do
   end
 
   it 'validates future dates' do
-    ValidationRules.future_date('2060-10-25').should be_true
+    ValidationRules.future_date('2100-10-25').should be_true
     ValidationRules.future_date(Time.now).should be_true
 
     ValidationRules.future_date('2010-10-25').should be_false
+  end
+
+  it 'validates past dates' do
+    ValidationRules.past_date('1998-10-25').should be_true
+    ValidationRules.past_date(Time.now).should be_true
+
+    ValidationRules.past_date('2100-10-25').should be_false
+  end
+
+  describe '.between_dates' do
+    it 'validates valid between' do
+      ValidationRules.between_dates(Time.now, '2010-10-25', '2100-10-25').should be_true
+
+      ValidationRules.between_dates(Time.now, '2010-10-25', '2011-10-25').should be_false
+      ValidationRules.between_dates(Time.now, '2100-10-25', '2120-10-25').should be_false
+      ValidationRules.between_dates(Time.now, '2100-10-25', '2011-10-25').should be_false
+    end      
   end
 
   subject do
@@ -355,6 +382,25 @@ describe ValidationRules do
       subject.any_bool('5').should be_false
       subject.any_bool('abc').should be_false
       subject.any_bool(5).should be_false
+    end
+  end # /.any_bool
+
+  describe '.url' do
+    it 'allows valid urls' do
+      subject.url('http://www.example.com').should be_true
+      subject.url('http://www.example.com/path').should be_true
+      subject.url('http://example.com').should be_true
+      subject.url('http://example.com?param=something').should be_true
+      subject.url('http://test:test@example.com').should be_true
+      subject.url('http://example.co.uk').should be_true
+      subject.url('http://example.com:80').should be_true
+      subject.url('http://localhost').should be_true
+      subject.url('example.com/some%20path').should be_false
+    end
+
+    it 'rejects invalid urls' do
+      subject.url('example.com').should be_false
+      subject.url('example.com/some path').should be_false
     end
   end
 end
