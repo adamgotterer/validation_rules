@@ -14,6 +14,8 @@ module ValidationRules
   NUMERIC_REGEX = /^[0-9]+$/
   DATE_REGEX = /^((?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[0-1]|0[1-9]|[1-2][0-9])$/
   ISO8601_REGEX = /^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[0-1]|0[1-9]|[1-2][0-9])(T(2[0-3]|[0-1][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z|[+-](?:2[0-3]|[0-1][0-9]):[0-5][0-9])?)?$/
+  IP_REGEX = /^(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.(\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))$/
+  UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
   def self.alpha(value)
     value =~ ALPHA_REGEX
@@ -160,5 +162,13 @@ module ValidationRules
     rescue URI::InvalidURIError
       false  
     end
+  end
+
+  def self.ip_address(value)
+    value =~ IP_REGEX
+  end
+
+  def self.uuid(value)
+    value =~ UUID_REGEX
   end
 end

@@ -403,4 +403,28 @@ describe ValidationRules do
       subject.url('example.com/some path').should be_false
     end
   end
+
+  describe '.ip_address' do
+    it 'allows valid IP addresses' do
+      subject.ip_address('1.1.1.1').should be_true
+      subject.ip_address('255.255.255.255').should be_true
+    end
+
+    it 'rejects invalud IP addresses' do
+      subject.ip_address('localhost').should be_false
+      subject.ip_address('a.b.c.d').should be_false
+      subject.ip_address('255.255.255.256').should be_false
+    end
+  end
+
+  describe '.uuid' do
+    it 'allows valid UUIDs' do
+      subject.uuid('01234567-9ABC-DEF0-1234-56789ABCDEF0').should be_true
+    end
+
+    it 'rejects invalid UUIDs' do
+      subject.uuid('invalid').should be_false
+      subject.uuid('ABCD-EFG-HIJ-KLM-NOP').should be_false
+    end
+  end
 end
