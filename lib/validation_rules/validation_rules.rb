@@ -124,26 +124,32 @@ module ValidationRules
   end
 
   def self.numeric(value)
-    value =~ NUMERIC_REGEX
+    return true if value =~ /^\d+$/
+    true if Float(value) rescue false
   end
 
   def self.numeric_min(value, min)
+    return false unless numeric(value)
     value.to_f >= min.to_f
   end
 
   def self.numeric_max(value, max)
+    return false unless numeric(value)
     value.to_f <= max.to_f
   end
 
   def self.positive(value)
+    return false unless numeric(value)
     value.to_f > 0
   end
 
   def self.negative(value)
+    return false unless numeric(value)
     value.to_f < 0
   end
 
   def self.range(value, min, max)
+    return false unless numeric(value)
     value.to_f >= min.to_f and value.to_f <= max.to_f
   end
 

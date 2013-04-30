@@ -213,9 +213,15 @@ describe ValidationRules do
 
   it 'validates numeric values' do
     ValidationRules.numeric('123456').should be_true  
+    ValidationRules.numeric(123456).should be_true  
+    ValidationRules.numeric('10.99').should be_true
+    ValidationRules.numeric(10.99).should be_true
+    ValidationRules.numeric('5.4e-29').should be_true
+    ValidationRules.numeric('12e20').should be_true
+    ValidationRules.numeric('0').should be_true
+    ValidationRules.numeric(0).should be_true
 
     ValidationRules.numeric('ABCDS').should be_false
-    ValidationRules.numeric('10.99').should be_false
     ValidationRules.numeric('ab123.99').should be_false
   end
 
@@ -223,6 +229,7 @@ describe ValidationRules do
     ValidationRules.numeric_min('11', '10').should be_true
     ValidationRules.numeric_min(11, 10).should be_true
     ValidationRules.numeric_min(11, 11).should be_true
+    ValidationRules.numeric_min(10.99, 10).should be_true
 
     ValidationRules.numeric_min(40, 50).should be_false
   end
@@ -231,6 +238,7 @@ describe ValidationRules do
     ValidationRules.numeric_max('50', '69').should be_true
     ValidationRules.numeric_max(50, 69).should be_true
     ValidationRules.numeric_max(50, 50).should be_true
+    ValidationRules.numeric_max(10.99, 11).should be_true
 
     ValidationRules.numeric_max(50, 40).should be_false
   end
