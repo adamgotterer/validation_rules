@@ -47,13 +47,13 @@ module ValidationRules
 
   def self.date(value)
     value =~ DATE_REGEX
-  end 
+  end
 
   def self.iso8601(value)
     value =~ ISO8601_REGEX
   end
 
-  def self.decimal(value, precision = 5, scale = 2)
+  def self.decimal(value, precision = 13, scale = 2)
     before, after = precision - scale, scale
     value.to_s =~ /^[-+]?\d{0,#{before}}?(?:\.\d{0,#{after}})?$/
   end
@@ -71,19 +71,19 @@ module ValidationRules
   end
 
   def self.future_date(value)
-    value = Time.parse(value) if value.is_a? String 
+    value = Time.parse(value) if value.is_a? String
     value.to_i >= Time.now.to_i
   end
 
   def self.past_date(value)
-    value = Time.parse(value) if value.is_a? String 
+    value = Time.parse(value) if value.is_a? String
     value.to_i <= Time.now.to_i
   end
 
   def self.between_dates(value, date1, date2)
-    value = Time.parse(value) if value.is_a? String 
-    date1 = Time.parse(date1) if date1.is_a? String 
-    date2 = Time.parse(date2) if date2.is_a? String 
+    value = Time.parse(value) if value.is_a? String
+    date1 = Time.parse(date1) if date1.is_a? String
+    date2 = Time.parse(date2) if date2.is_a? String
 
     value.between?(date1, date2)
   end
@@ -120,7 +120,7 @@ module ValidationRules
   end
 
   def self.min_length(value, length)
-    value.to_s.length >= length 
+    value.to_s.length >= length
   end
 
   def self.numeric(value)
@@ -166,7 +166,7 @@ module ValidationRules
       uri = URI.parse(value)
       uri.kind_of? URI::HTTP
     rescue URI::InvalidURIError
-      false  
+      false
     end
   end
 
