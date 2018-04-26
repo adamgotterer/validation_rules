@@ -77,8 +77,8 @@ describe ValidationRules do
       ValidationRules.alpha_numeric_dash('ABCDEFGHIJKLMNOPQRSTUVWXYZ').should be_true
       ValidationRules.alpha_numeric_dash('abcdefghijklmnopqrstuvwxyz').should be_true
       ValidationRules.alpha_numeric_dash('A-B-C-0-9').should be_true
-      ValidationRules.alpha_numeric_dash('A_B_C_0_9').should be_true  
-      ValidationRules.alpha_numeric_dash('A_-B_-C_-0_-9').should be_true  
+      ValidationRules.alpha_numeric_dash('A_B_C_0_9').should be_true
+      ValidationRules.alpha_numeric_dash('A_-B_-C_-0_-9').should be_true
     end
 
     it 'fails for invalid characters' do
@@ -162,17 +162,17 @@ describe ValidationRules do
 
   context 'money' do
     it 'passes for valid values' do
-      ValidationRules.money('5.55').should be_true   
-      ValidationRules.money('55.55').should be_true   
-      ValidationRules.money(5.55).should be_true   
-      ValidationRules.money('5.55', 4).should be_true   
-      ValidationRules.money('5.555', 4).should be_true   
-      ValidationRules.money('5.5555', 4).should be_true   
-      ValidationRules.money('-5').should be_true   
-      ValidationRules.money('+5').should be_true   
-      ValidationRules.money(-5).should be_true   
-      ValidationRules.money(+5).should be_true   
-      ValidationRules.money('.98').should be_true   
+      ValidationRules.money('5.55').should be_true
+      ValidationRules.money('55.55').should be_true
+      ValidationRules.money(5.55).should be_true
+      ValidationRules.money('5.55', 4).should be_true
+      ValidationRules.money('5.555', 4).should be_true
+      ValidationRules.money('5.5555', 4).should be_true
+      ValidationRules.money('-5').should be_true
+      ValidationRules.money('+5').should be_true
+      ValidationRules.money(-5).should be_true
+      ValidationRules.money(+5).should be_true
+      ValidationRules.money('.98').should be_true
     end
 
     it 'fails for invalid values' do
@@ -212,8 +212,8 @@ describe ValidationRules do
   end
 
   it 'validates numeric values' do
-    ValidationRules.numeric('123456').should be_true  
-    ValidationRules.numeric(123456).should be_true  
+    ValidationRules.numeric('123456').should be_true
+    ValidationRules.numeric(123456).should be_true
     ValidationRules.numeric('10.99').should be_true
     ValidationRules.numeric(10.99).should be_true
     ValidationRules.numeric('5.4e-29').should be_true
@@ -299,7 +299,7 @@ describe ValidationRules do
     ValidationRules.iso8601('2010-10-25T10:00:00+07:00').should be_true
     ValidationRules.iso8601('2010-10-25T10:00:00.12+07:00').should be_true
     ValidationRules.iso8601('2010-10-25T00:00:00Z').should be_true
-    
+
     ValidationRules.iso8601('2010-10-25 00:00:00').should be_false
     ValidationRules.iso8601('2010-10-25 00:99:00').should be_false
     ValidationRules.iso8601('2010/10/05').should be_false
@@ -327,7 +327,7 @@ describe ValidationRules do
       ValidationRules.between_dates(Time.now, '2010-10-25', '2011-10-25').should be_false
       ValidationRules.between_dates(Time.now, '2100-10-25', '2120-10-25').should be_false
       ValidationRules.between_dates(Time.now, '2100-10-25', '2011-10-25').should be_false
-    end      
+    end
   end
 
   subject do
@@ -391,7 +391,7 @@ describe ValidationRules do
       subject.any_bool('abc').should be_false
       subject.any_bool(5).should be_false
     end
-  end # /.any_bool
+  end
 
   describe '.url' do
     it 'allows valid urls' do
@@ -403,12 +403,13 @@ describe ValidationRules do
       subject.url('http://example.co.uk').should be_true
       subject.url('http://example.com:80').should be_true
       subject.url('http://localhost').should be_true
-      subject.url('example.com/some%20path').should be_false
     end
 
     it 'rejects invalid urls' do
       subject.url('example.com').should be_false
       subject.url('example.com/some path').should be_false
+      subject.url('example.com/some%20path').should be_false
+      subject.url('http://www.example.com/düsseldorf?x=Lörick').should be_false
     end
   end
 
